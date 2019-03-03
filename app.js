@@ -1,9 +1,11 @@
 let express = require('express');
+let cors = require('cors');
 let mongoose = require('mongoose');
 let app = express();
 let mainRouter = require('./routes/main');
-mongoose.connect('mongodb://localhost:27017/users', ({useNewUrlParser: true}));
+mongoose.connect('mongodb://localhost:27017/timeManegment', ({useNewUrlParser: true}));
 
+app.use(cors({origin: '*'}));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use('/api', mainRouter);
