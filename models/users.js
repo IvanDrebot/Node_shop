@@ -6,8 +6,7 @@ let UsersSchema = new Schema({
     surname: String,
     password: String,
     login: String,
-    age: Number,
-    city: String
+    age: Number
 });
 
 UsersModel = mongoose.model('Users', UsersSchema);
