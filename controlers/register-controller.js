@@ -12,7 +12,15 @@ controler.findAll = async (req, res, next)=>{
 
 controler.create = async (req, res, next)=>{
     try {
-        res.json(await User.create(req.body))
+        let newUser = req.body;
+        let alreadyExists = await User.countDocuments({email: newUser.email})
+        if (alreadyExists){
+            res.redirect('/login')
+        } else {
+            await User.create(newUser);
+            res.redirect('/login')
+        }
+
     } catch (e) {
         let errorControler = new ErrorControler('Validation error', 400)
         next(errorControler);
