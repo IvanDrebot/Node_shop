@@ -1,14 +1,6 @@
-let LoginUser = require('../models/login');
+let LoginUser = require('../models/Users');
 let ErrorControler = require('../errors/controler-error');
 let controler = {};
-
-controler.findById = async (req, res, next)=>{
-    try {
-        res.json(await LoginUser.findById(req.params.id))
-    } catch (e) {
-        next(e)
-    }
-};
 
 controler.findAll = async (req, res, next)=>{
     try {
@@ -27,25 +19,5 @@ controler.create = async (req, res, next)=>{
     }
 };
 
-controler.update = async (req, res, next)=>{
-    try {
-        res.json(await LoginUser.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            {new: true}
-            )
-        )
-    } catch (e) {
-        next(e)
-    }
-};
-
-controler.delete = async (req, res, next)=>{
-    try {
-        res.json(await LoginUser.findByIdAndRemove(req.params.id))
-    } catch (e) {
-        next(e)
-    }
-};
 
 module.exports = controler;

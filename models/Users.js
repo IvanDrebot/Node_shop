@@ -1,12 +1,12 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
-let RegisterSchema = new Schema({
+let UserSchema = new Schema({
     name: String,
     phone: Number,
     email: String,
     password: String
 });
 
-RegisterModel = mongoose.model('Register', RegisterSchema);
-module.exports = RegisterModel;
+module.exports = mongoose.model('User', UserSchema);
+
