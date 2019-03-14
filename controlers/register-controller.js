@@ -1,5 +1,5 @@
 let User = require('../models/Users');
-let ErrorControler = require('../errors/controler-error');
+// let ErrorControler = require('../errors/controler-error');
 let controler = {};
 
 controler.findAll = async (req, res, next)=>{
@@ -18,12 +18,14 @@ controler.create = async (req, res, next)=>{
             res.json('Mail or password already exists')
         } else {
             await User.create(newUser);
-            res.json('User is registered')
+            User.session.createdUser = createdUser;
+            res.json('user is registered')
         }
 
     } catch (e) {
-        let errorControler = new ErrorControler('Validation error', 400)
-        next(errorControler);
+        res.json(e)
+        // let errorControler = new ErrorControler('Validation error', 400)
+        // next(errorControler);
     }
 };
 
