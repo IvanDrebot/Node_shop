@@ -15,10 +15,10 @@ controler.create = async (req, res, next)=>{
         let newUser = req.body;
         let alreadyExists = await User.countDocuments({email: newUser.email})
         if (alreadyExists){
-            res.redirect('/login')
+            res.json('Mail or password already exists')
         } else {
             await User.create(newUser);
-            res.redirect('/login')
+            res.json('User is registered')
         }
 
     } catch (e) {
