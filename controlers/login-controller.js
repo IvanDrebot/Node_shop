@@ -1,10 +1,11 @@
-let LoginUser = require('../models/Users');
-let ErrorControler = require('../errors/controler-error');
+let loginUser = require('../models/Users');
+
+// let ErrorControler = require('../errors/controler-error');
 let controler = {};
 
 controler.findAll = async (req, res, next)=>{
     try {
-        res.json(await LoginUser.find({}))
+        res.json(await loginUser.find({}))
     } catch (e) {
         next(e)
     }
@@ -12,12 +13,19 @@ controler.findAll = async (req, res, next)=>{
 
 controler.create = async (req, res, next)=>{
     try {
-        res.json(await LoginUser.create(req.body))
+        let login = req.body;
+        let existsUser = await loginUser.countDocuments({email: login.email, password: login.password
+        });
+        if (existsUser) {
+            res.json('you can go!')
+        } else {
+            // existsUser.session.loginU = loginU;
+            res.json('go fack!')
+        }
+
     } catch (e) {
-        let errorControler = new ErrorControler('Validation error', 400)
-        next(errorControler);
+        res.json(e)
     }
 };
-
 
 module.exports = controler;
