@@ -1,28 +1,40 @@
 let User = require('../models/Users');
-// let ErrorControler = require('../errors/controler-error');
 let controler = {};
-
-controler.findAll = async (req, res, next)=>{
-    try {
-        res.json(await User.find({}))
-    } catch (e) {
-        next(e)
-    }
-};
 
 controler.create = async (req, res, next)=>{
     try {
-        let newUser = req.body;
-        let alreadyExists = await User.countDocuments({email: newUser.email});
+        let {name, email, password, phone} = req.body;
+        if (!name || !email || !password || !phone){
+            res.json({
+                response: false,
+                message: 'some fields are empty'
+            })
+        }
+        let alreadyExists = await User.countDocuments({email: req.body.email});
         if (alreadyExists){
             res.json('Mail or password already exists')
         } else {
-            await User.create(newUser);
-            res.json('user is registered')
+            await User.create({
+                name,
+                email,
+                password,
+                phone
+            });
+            res.json({
+                success: true,
+                massage: 'User is registered'
+            })
         }
     } catch (e) {
-        res.json(e)
+        res.json(e);
+        console.log(e)
     }
+};
+
+
+
+controler.findAll = async (req, res, next)=>{
+    res.json(await User.find({}))
 };
 
 module.exports = controler;

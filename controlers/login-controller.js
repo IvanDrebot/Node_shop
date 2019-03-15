@@ -1,31 +1,34 @@
 let loginUser = require('../models/Users');
-
-// let ErrorControler = require('../errors/controler-error');
+let token = require('jsonwebtoken');
 let controler = {};
 
-controler.findAll = async (req, res, next)=>{
-    try {
-        res.json(await loginUser.find({}))
-    } catch (e) {
-        next(e)
-    }
-};
 
 controler.create = async (req, res, next)=>{
     try {
-        let login = req.body;
-        let existsUser = await loginUser.countDocuments({email: login.email, password: login.password
+        let alreadyExists = await loginUser.countDocuments({
+            email: req.body.email,
+            password: req.body.password
         });
-        if (existsUser) {
-            res.json('you can go!')
+        if (alreadyExists) {
+            res.json({
+                response: true,
+                message: 'you can go'
+            })
         } else {
-            // existsUser.session.loginU = loginU;
-            res.json('go fack!')
+            res.json({
+                response: false,
+                message: 'some fields are empty or user not exists'
+            })
         }
 
     } catch (e) {
-        res.json(e)
+        res.json(e);
+        console.log(e)
     }
+};
+
+controler.findAll = async (req, res, next)=>{
+    res.json(await loginUser.find({}))
 };
 
 module.exports = controler;
