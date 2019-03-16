@@ -1,5 +1,5 @@
 let loginUser = require('../models/Users');
-let token = require('jsonwebtoken');
+let jwt = require('jsonwebtoken');
 let controler = {};
 
 
@@ -10,10 +10,12 @@ controler.create = async (req, res, next)=>{
             password: req.body.password
         });
         if (alreadyExists) {
+         const token = jwt.sign({
+           email: req.body.email},'sercer',{expiresIn: "1h"});
             res.json({
                 response: true,
-                message: 'you can go'
-            })
+                message: token
+            });
         } else {
             res.json({
                 response: false,

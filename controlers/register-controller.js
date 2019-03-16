@@ -12,7 +12,10 @@ controler.create = async (req, res, next)=>{
         }
         let alreadyExists = await User.countDocuments({email: req.body.email});
         if (alreadyExists){
-            res.json('Mail or password already exists')
+            res.json({
+            response: true,
+            message: 'Email or password is already in use'
+        });
         } else {
             await User.create({
                 name,
@@ -22,7 +25,7 @@ controler.create = async (req, res, next)=>{
             });
             res.json({
                 success: true,
-                massage: 'User is registered'
+                massage: 'User is successfully registered'
             })
         }
     } catch (e) {

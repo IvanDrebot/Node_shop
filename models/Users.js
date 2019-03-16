@@ -9,12 +9,13 @@ let UserSchema = new Schema({
     },
     phone: {
         type:Number,
-        required: true,
-        min: 6
+        min: 6,
+        required: true
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     },
     password: {
         type: String,
@@ -23,4 +24,3 @@ let UserSchema = new Schema({
 });
 
 module.exports = mongoose.model('User', UserSchema);
-
