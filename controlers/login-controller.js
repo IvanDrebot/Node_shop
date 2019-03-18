@@ -11,14 +11,14 @@ controler.create = async (req, res, next)=>{
         });
         if (alreadyExists) {
          const token = jwt.sign({
-           email: req.body.email},'sercer',{expiresIn: "1h"});
+           email: req.body.email},'sercet',{expiresIn: "1h"});
             res.json({
-                response: true,
+                success: true,
                 message: token
             });
         } else {
             res.json({
-                response: false,
+                success: false,
                 message: 'some fields are empty or user not exists'
             })
         }

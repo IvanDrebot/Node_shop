@@ -4,12 +4,10 @@ let Schema = mongoose.Schema;
 let UserSchema = new Schema({
     name: {
         type: String,
-        required: true,
-        min: 6
+        required: true
     },
     phone: {
         type:Number,
-        min: 6,
         required: true
     },
     email: {

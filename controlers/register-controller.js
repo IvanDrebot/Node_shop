@@ -6,15 +6,15 @@ controler.create = async (req, res, next)=>{
         let {name, email, password, phone} = req.body;
         if (!name || !email || !password || !phone){
             res.json({
-                response: false,
+                success: false,
                 message: 'some fields are empty'
             })
         }
         let alreadyExists = await User.countDocuments({email: req.body.email});
         if (alreadyExists){
             res.json({
-            response: true,
-            message: 'Email or password is already in use'
+            success: false,
+            message: 'Email is already in use'
         });
         } else {
             await User.create({
