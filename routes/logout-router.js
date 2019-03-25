@@ -1,6 +1,6 @@
 let router = require('express').Router();
-let logoutController = require('../controlers/login-controller');
+let logoutController = require('../controlers/logout-controller');
 
-router.get('/', logoutController.findAll);
+router.get('/', logoutController.delete);
 
 module.exports = router;
