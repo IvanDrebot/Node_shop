@@ -8,5 +8,6 @@ router.use('/register', RegisterRouter);
 router.use('/login', LoginRouter);
 router.use('/logout', LogoutRouter);
 router.use('/phone', PhonesRouter);
+router.use('/phone/:id', PhonesRouter);
 
 module.exports = router;
