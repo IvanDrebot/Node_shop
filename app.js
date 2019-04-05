@@ -4,10 +4,32 @@ let mongoose = require('mongoose');
 let app = express();
 let mainRouter = require('./routes/main');
 mongoose.connect('mongodb://localhost:27017/Shop', ({useNewUrlParser: true}));
+// let category = require('./models/Category');
+// let brand = require('./models/Brand');
+let product = require('./models/Product');
 
 app.use(cors({origin: '*'}));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+
+
+// Fabric for Models-----------------------------------
+// try{
+// async function start(){
+//     console.log(await product.create({
+        // category: 'Phones',
+        // brand: {name: ''},
+        // imgUrl: '',
+        // price: 5000
+    // }));
+// }
+// start().then(()=>{
+//     console.log('ok');
+// })}catch (e) {
+//     console.log(e.message)
+// }
+
+// Fabric for Models---------------------------------
 
 
 app.use('/api', mainRouter);

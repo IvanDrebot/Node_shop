@@ -1,4 +1,4 @@
-let Phones = require('../../models/Phones');
+let Phones = require('../models/Product');
 let controler = {};
 
 controler.findById = async (req, res, next)=>{
@@ -64,11 +64,15 @@ controler.findAll = async (req, res, next)=> {
     } catch (e) {
         console.log(e.message)
     }
-}
+};
 
 
 controler.create = async (req, res, next)=>{
-    res.json(await Phones.create(req.body))
+    try {
+        res.json(await Phones.create(req.body))
+    } catch (e) {
+        console.log(e.message)
+    }
 };
 
 module.exports = controler;
