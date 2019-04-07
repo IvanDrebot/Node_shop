@@ -12,5 +12,8 @@ controler.create = async (req, res, next)=>{
         console.log(e.message)
     }
 };
+controler.delete = async (req, res, next)=>{
+    res.json(await Category.findOneAndDelete(req.params.id))
+};
 
 module.exports = controler;

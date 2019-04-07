@@ -7,12 +7,14 @@ let ProductSchema = new Schema({
         type: Schema.ObjectId,
         ref: 'Category'
     },
-    brand: {
+    producer: {
         type: Schema.Types.ObjectId,
-        ref: 'Brand'
+        ref: 'Producer'
     },
     imgUrl: String,
-    price: Number
+    price: Number,
+    brand: String
+
 });
 
 module.exports = mongoose.model('Product', ProductSchema);

@@ -3,10 +3,10 @@ let cors = require('cors');
 let mongoose = require('mongoose');
 let app = express();
 let mainRouter = require('./routes/main');
-mongoose.connect('mongodb://localhost:27017/Shop', ({useNewUrlParser: true}));
+mongoose.connect('mongodb://localhost:27017/onlineShop', ({useNewUrlParser: true}));
 // let category = require('./models/Category');
-// let brand = require('./models/Brand');
-let product = require('./models/Product');
+// let brand = require('./models/Producer');
+// let product = require('./models/Product');
 
 app.use(cors({origin: '*'}));
 app.use(express.urlencoded({extended: true}));
@@ -17,11 +17,10 @@ app.use(express.json());
 // try{
 // async function start(){
 //     console.log(await product.create({
-        // category: 'Phones',
-        // brand: {name: ''},
-        // imgUrl: '',
-        // price: 5000
-    // }));
+//     category: '5ca64b2dfd73fe2ae8141885',
+//     imgUrl: '',
+//     price: 5000
+//     }));
 // }
 // start().then(()=>{
 //     console.log('ok');
