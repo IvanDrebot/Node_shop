@@ -2,9 +2,9 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let CategorySchema = new Schema({
-    // id: {
-    //     type: mongoose.Types.ObjectId,
-    // },
+    id: {
+        type: mongoose.Types.ObjectId,
+    },
     name: String
 });
 

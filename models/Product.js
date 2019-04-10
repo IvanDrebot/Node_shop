@@ -14,8 +14,6 @@ let ProductSchema = new Schema({
     imgUrl: String,
     price: Number,
     brand: String
-
 });
 
 module.exports = mongoose.model('Product', ProductSchema);
-
