@@ -3,7 +3,7 @@ let cors = require('cors');
 let mongoose = require('mongoose');
 let app = express();
 let mainRouter = require('./routes/main');
-mongoose.connect('mongodb://localhost:27017/onlineShop', ({useNewUrlParser: true}));
+mongoose.connect('mongodb://localhost:27017/shop', ({useNewUrlParser: true}));
 // let category = require('./models/Category');
 // let brand = require('./models/Producer');
 // let product = require('./models/Product');

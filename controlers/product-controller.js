@@ -5,46 +5,86 @@ controler.findById = async (req, res, next) => {
     res.json(await Product.findById(req.params.id)
         .populate({
             path: 'producer',
-            select: '-name _id'
+            // select: '-name _id'
         })
         .populate({
             path: 'category',
-            select: '-name _id'
+            // select: '-name _id'
         })
     )
 };
 
 controler.findAll = async (req, res, next) => {
     try {
-        let {category={},
-            producer={},
+        let {
+            category,
             limit = 1000000000,
             skip = 0
         } = req.query;
-
-        let count = await Product.find({});
         console.log(req.query);
-        console.log(category);
-        if(category) {
-            category = {
-                category: category
-            }
-        }
-        let products = await Product.find(category)
+
+        res.json(await Product.find({})
             .limit(limit)
             .skip(skip)
-        // .populate({
-        //     path: 'producer',
-        //     select: 'name _id'
-        // })
-        // .populate({
-        //     path: 'category',
-        //     select: 'name _id'});
-        res.json({products: products, count: count.length});
+            .populate({
+                path: 'producer',
+                // select: 'name _id'
+            })
+            .populate({
+                path: 'category',
+                // select: 'name _id'
+            })
+        )
     } catch (e) {
         console.log(e.message);
     }
 };
+
+
+controler.create = async (req, res, next) => {
+    try {
+        // console.log(req.body);
+        // res.json(await Product.find(req.body))
+
+        console.log(req.body);
+        let {category, producer, brand, imgUrl, price} = req.body;
+        if (!category || !producer || !price || !brand){
+            res.json({
+                success: false,
+                message: 'some fields are empty'
+            })
+        }
+        let alreadyExists = await Product.countDocuments({brand: brand});
+
+        if (alreadyExists) {
+            res.json({
+                success: false,
+                message: 'Product already exists'
+            })
+        } else {
+            await Product.create(req.body);
+            res.json({
+                success: true,
+                massage: 'Product is successfully created'
+            })
+        }
+    } catch (e) {
+        console.log(e.message)
+    }
+};
+
+controler.delete = async (req, res, next) => {
+    console.log(req.params.id);
+    res.json(await Product.findOneAndDelete(req.params.id))
+};
+
+module.exports = controler;
+
+
+
+
+
+
 
 
 // try {
@@ -106,18 +146,3 @@ controler.findAll = async (req, res, next) => {
 //     console.log(e.message)
 // }
 // };
-
-
-controler.create = async (req, res, next) => {
-    try {
-        res.json(await Product.create(req.body))
-    } catch (e) {
-        console.log(e.message)
-    }
-};
-
-controler.delete = async (req, res, next) => {
-    res.json(await Product.findOneAndDelete(req.params.id))
-};
-
-module.exports = controler;
