@@ -14,14 +14,38 @@ controler.findById = async (req, res, next) => {
     )
 };
 
+// controler.findAll = async (req, res, next) => {
+//     try {
+//         const {skip, limit , ...others} = req.query;
+//         const obj1 = {skip, limit};
+//         const obj2 = {...others};
+//         console.log(req.query);
+//
+//         res.json(await Product.find(obj2)
+//             .limit(obj1.limit)
+//             .skip(obj1.skip)
+//             .populate({
+//                 path: 'producer',
+//                 select: 'name _id'
+//             })
+//             .populate({
+//                 path: 'category',
+//                 select: 'name _id'
+//             })
+//         )
+//     } catch (e) {
+//         console.log(e.message);
+//     }
+// };
+
 controler.findAll = async (req, res, next) => {
     try {
-        const {skip, limit , ...others} = req.query;
+        const {skip, limit, ...others} = req.query;
         const obj1 = {skip, limit};
         const obj2 = {...others};
         console.log(req.query);
 
-        res.json(await Product.find(obj2)
+        let products = await Product.find(obj2)
             .limit(obj1.limit)
             .skip(obj1.skip)
             .populate({
@@ -31,8 +55,12 @@ controler.findAll = async (req, res, next) => {
             .populate({
                 path: 'category',
                 select: 'name _id'
-            })
-        )
+            });
+
+        let count = await Product.countDocuments(obj2);
+
+        res.json({products, count})
+
     } catch (e) {
         console.log(e.message);
     }
@@ -64,12 +92,6 @@ controler.delete = async (req, res, next) => {
 };
 
 module.exports = controler;
-
-
-
-
-
-
 
 
 // try {

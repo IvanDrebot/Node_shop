@@ -13,7 +13,8 @@ let ProductSchema = new Schema({
     },
     imgUrl: String,
     price: Number,
-    brand: String
+    brand: String,
+    count: Number
 });
 
 module.exports = mongoose.model('Product', ProductSchema);
