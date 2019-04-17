@@ -16,23 +16,21 @@ controler.findById = async (req, res, next) => {
 
 controler.findAll = async (req, res, next) => {
     try {
-        let {
-            category,
-            limit = 1000000000,
-            skip = 0
-        } = req.query;
+        const {skip, limit , ...others} = req.query;
+        const obj1 = {skip, limit};
+        const obj2 = {...others};
         console.log(req.query);
 
-        res.json(await Product.find({})
-            .limit(limit)
-            .skip(skip)
+        res.json(await Product.find(obj2)
+            .limit(obj1.limit)
+            .skip(obj1.skip)
             .populate({
                 path: 'producer',
-                // select: 'name _id'
+                select: 'name _id'
             })
             .populate({
                 path: 'category',
-                // select: 'name _id'
+                select: 'name _id'
             })
         )
     } catch (e) {
@@ -40,38 +38,25 @@ controler.findAll = async (req, res, next) => {
     }
 };
 
-
 controler.create = async (req, res, next) => {
     try {
-        // console.log(req.body);
-        // res.json(await Product.find(req.body))
-
         console.log(req.body);
-        let {category, producer, brand, imgUrl, price} = req.body;
-        if (!category || !producer || !price || !brand){
-            res.json({
-                success: false,
-                message: 'some fields are empty'
+        res.json(await Product.find(req.body)
+            .populate({
+                path: 'producer',
+                select: 'name _id'
             })
-        }
-        let alreadyExists = await Product.countDocuments({brand: brand});
+            .populate({
+                path: 'category',
+                select: 'name _id'
+            })
+        )
 
-        if (alreadyExists) {
-            res.json({
-                success: false,
-                message: 'Product already exists'
-            })
-        } else {
-            await Product.create(req.body);
-            res.json({
-                success: true,
-                massage: 'Product is successfully created'
-            })
-        }
     } catch (e) {
         console.log(e.message)
     }
 };
+
 
 controler.delete = async (req, res, next) => {
     console.log(req.params.id);

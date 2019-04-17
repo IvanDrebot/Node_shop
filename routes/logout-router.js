@@ -1,5 +1,5 @@
 let router = require('express').Router();
-let logoutController = require('../controlers/logout-controller');
+let logoutController = require('../controllers/logout-controller');
 
 router.get('/', logoutController.delete);
 

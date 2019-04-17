@@ -1,5 +1,5 @@
 let router = require('express').Router();
-let ProductControler = require('../controlers/product-controller');
+let ProductControler = require('../controllers/product-controller');
 
 router.get('/', ProductControler.findAll);
 router.post('/', ProductControler.create);

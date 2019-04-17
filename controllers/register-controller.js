@@ -37,7 +37,7 @@ controler.create = async (req, res, next)=>{
 
 
 controler.findAll = async (req, res, next)=>{
-    res.json(await User.find({}))
+    res.json(await User.countDocuments({}))
 };
 
 module.exports = controler;
