@@ -5,16 +5,32 @@ let ProductSchema = new Schema({
     id: mongoose.Types.ObjectId,
     category: {
         type: Schema.ObjectId,
-        ref: 'Category'
-    },
+        ref: 'Category'},
     producer: {
         type: Schema.Types.ObjectId,
-        ref: 'Producer'
-    },
-    imgUrl: String,
+        ref: 'Producer'},
+    comments: {
+        type: Schema.Types.ObjectId,
+        ref: 'Comment'},
+    accessories: {
+        type: Schema.Types.ObjectId,
+        ref: 'Accessories'},
+    img: [],
     price: Number,
     brand: String,
-    count: Number
+    diagonalScreen: Number,
+    resolutionScreen: String,
+    displayType: String,
+    internalMemory: Number,
+    RAM: Number,
+    camera: Number,
+    frontCamera: Number,
+    battery: Number,
+    countOfSimCard: Number,
+    countOfCores: Number,
+    operatingSystem: String,
+    color: String,
+    graduationYear: Number
 });
 
 module.exports = mongoose.model('Product', ProductSchema);

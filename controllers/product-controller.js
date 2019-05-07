@@ -44,8 +44,6 @@ controler.findAll = async (req, res, next) => {
         const obj1 = {skip, limit};
         const obj2 = {...others};
         const obj3 = {min, max};
-        console.log(req.query);
-
 
         if (obj3.min && obj3.max) {
             let products = await Product.find(obj2)
@@ -82,9 +80,7 @@ controler.findAll = async (req, res, next) => {
             let count = await Product.countDocuments(obj2);
 
             res.json({products, count})
-
         }
-
     } catch (e) {
         console.log(e.message);
     }
