@@ -40,48 +40,30 @@ controler.findById = async (req, res, next) => {
 
 controler.findAll = async (req, res, next) => {
     try {
-        const {skip, limit, min, max, ...others} = req.query;
+        const {skip, limit, ...others} = req.query;
         const obj1 = {skip, limit};
-        const obj2 = {...others};
-        const obj3 = {min, max};
+        const obj2 = {others};
 
-        if (obj3.min && obj3.max) {
-            let products = await Product.find(obj2)
-                .find({price: {$gte: obj3.min, $lte: obj3.max}})
-                .limit(obj1.limit)
-                .skip(obj1.skip)
-                .populate({
-                    path: 'producer',
-                    select: 'name _id'
-                })
-                .populate({
-                    path: 'category',
-                    select: 'name _id'
-                });
+        console.log(req.query);
 
-            let count = await Product.countDocuments(
-                {price: {$gte: obj3.min, $lte: obj3.max}});
+        let products = await Product.find(obj2.others)
+            .limit(obj1.limit)
+            .skip(obj1.skip)
+            .populate({
+                path: 'producer',
+                select: 'name _id'
+            })
+            .populate({
+                path: 'category',
+                select: 'name _id'
+            });
 
-            res.json({products, count})
+        let count = await Product.countDocuments(obj2.others);
 
-        } else {
-            let products = await Product.find(obj2)
-                .limit(obj1.limit)
-                .skip(obj1.skip)
-                .populate({
-                    path: 'producer',
-                    select: 'name _id'
-                })
-                .populate({
-                    path: 'category',
-                    select: 'name _id'
-                });
+        res.json({products, count})
 
-            let count = await Product.countDocuments(obj2);
-
-            res.json({products, count})
-        }
-    } catch (e) {
+    }
+    catch (e) {
         console.log(e.message);
     }
 };
