@@ -15,7 +15,7 @@ let ProductSchema = new Schema({
     accessories: {
         type: Schema.Types.ObjectId,
         ref: 'Accessories'},
-    img: [],
+    imgUrl: String,
     price: Number,
     brand: String,
     diagonalScreen: Number,
