@@ -8,7 +8,7 @@ mongoose.connect('mongodb://localhost:27017/shop', ({useNewUrlParser: true}));
 app.use(cors({origin: '*'}));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-
+app.use(express.static('uploads'));
 
 app.use('/api', mainRouter);
 app.use((req, res, next)=>{
