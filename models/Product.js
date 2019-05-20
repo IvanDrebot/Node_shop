@@ -15,9 +15,16 @@ let ProductSchema = new Schema({
     accessories: {
         type: Schema.Types.ObjectId,
         ref: 'Accessories'},
-    image: String,
     price: Number,
     brand: String,
+    description: Object,
+    image: [],
+    colors: [],
+    date: {
+        type: Date,
+        default: new Date()
+    },
+    sale: Boolean
 });
 
 module.exports = mongoose.model('Product', ProductSchema);
