@@ -2,10 +2,9 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let CategorySchema = new Schema({
-    id: {
-        type: mongoose.Types.ObjectId,
-    },
-    name: String
+    name: String,
+    image: String,
+    description: []
 });
 
 module.exports = mongoose.model('Category', CategorySchema);

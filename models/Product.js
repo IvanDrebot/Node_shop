@@ -18,19 +18,6 @@ let ProductSchema = new Schema({
     image: String,
     price: Number,
     brand: String,
-    // diagonalScreen: Number,
-    // resolutionScreen: String,
-    // displayType: String,
-    // internalMemory: Number,
-    // RAM: Number,
-    // camera: Number,
-    // frontCamera: Number,
-    // battery: Number,
-    // countOfSimCard: Number,
-    // countOfCores: Number,
-    // operatingSystem: String,
-    // color: String,
-    // graduationYear: Number
 });
 
 module.exports = mongoose.model('Product', ProductSchema);
