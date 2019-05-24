@@ -3,40 +3,11 @@ let controler = {};
 
 controler.findById = async (req, res, next) => {
     res.json(await Product.findById(req.params.id)
-        .populate({
-            path: 'producer',
-            // select: '-name _id'
-        })
-        .populate({
-            path: 'category',
-            // select: '-name _id'
-        })
+        .populate({path: 'producer'})
+        .populate({path: 'category'})
     )
 };
 
-// controler.findAll = async (req, res, next) => {
-//     try {
-//         const {skip, limit , ...others} = req.query;
-//         const obj1 = {skip, limit};
-//         const obj2 = {...others};
-//         console.log(req.query);
-//
-//         res.json(await Product.find(obj2)
-//             .limit(obj1.limit)
-//             .skip(obj1.skip)
-//             .populate({
-//                 path: 'producer',
-//                 select: 'name _id'
-//             })
-//             .populate({
-//                 path: 'category',
-//                 select: 'name _id'
-//             })
-//         )
-//     } catch (e) {
-//         console.log(e.message);
-//     }
-// };
 
 controler.findAll = async (req, res, next) => {
     try {
@@ -71,87 +42,62 @@ controler.findAll = async (req, res, next) => {
 controler.create = async (req, res, next) => {
     try {
         console.log(req.body);
-        res.json(await Product.find(req.body)
-            .populate({
-                path: 'producer',
-                select: 'name _id'
+        let {category, producer, brand, price} = req.body;
+        if (!category || !producer || !price || !brand) {
+            res.json({
+                success: false,
+                message: 'some fields are empty'
             })
-            .populate({
-                path: 'category',
-                select: 'name _id'
+        }
+        let alreadyExists = await Product.countDocuments({brand: brand});
+
+        if (alreadyExists) {
+            res.json({
+                success: false,
+                message: 'product already exists'
             })
-        )
+        } else {
+            await Product.create(req.body);
+            res.json({
+                success: true,
+                massage: 'product is successfully created'
+            })
+        }
+    } catch (e) {
+        console.log(e.message)
+    }
+};
+
+controler.put = async (req, res, next) => {
+    try {
+        console.log(req.params.id);
+        console.log(req.body);
+        const {category, producer, price, brand, imgUrl} = req.body;
+
+        if (!category || !producer || !price || !brand) {
+            res.json({
+                success: false,
+                message: 'you must fill up all field'
+            })
+        }
+
+        await Product.findOneAndUpdate(
+            req.params.id,
+            req.body,
+            {new: true});
+
+        res.json({
+            success: true,
+            message: 'product is successfully updated'
+        })
 
     } catch (e) {
         console.log(e.message)
     }
 };
 
-
 controler.delete = async (req, res, next) => {
-    console.log(req.params.id);
-    res.json(await Product.findOneAndDelete(req.params.id))
+    res.json(await Product.findOneAndDelete(req.params.id));
 };
 
 module.exports = controler;
-
-
-// try {
-//     let query = req.query;
-//     let filter = {
-//             q: {
-//                 name: query.name ? query.name : '',
-//                 price: query.price
-//             },
-//             skip: query.skip ? query.skip : 0,
-//             limit: query.limit ? query.limit : '',
-//     };
-//         console.log(filter);
-//
-//         let phones = await Phones.find({name: filter.q.name, price: filter.q.price})
-//             .skip(filter.skip)
-//             .limit(filter.limit)
-//
-//
-//
-//         res.json(phones);
-//
-//     } catch (e) {
-//         console.log(e.message)
-//     }
-// };
-
-// try{
-//     let query = req.query;
-//
-//     let {name, price, skip, limit} = query;
-//
-//     if(name && price){
-//         res.json(await Product.find(query)
-//             .limit(limit)
-//             .skip(skip)
-// )
-// }
-// else if (price){
-//     res.json(await Product.find({price: price})
-//         .limit(limit)
-//         .skip(skip)
-//     )
-// }
-// else if(name){
-//     res.json(await Product.find({name: name})
-//         .limit(limit)
-//         .skip(skip)
-//     )
-// }
-// else {
-//     res.json(await Product.find({})
-//         .limit(limit)
-//         .skip(skip)
-//     );
-// }
-//
-// } catch (e) {
-//     console.log(e.message)
-// }
-// };

@@ -17,7 +17,7 @@ let ProductSchema = new Schema({
         ref: 'Accessories'},
     price: Number,
     brand: String,
-    description: Object,
+    description: [],
     image: [],
     colors: [],
     date: {

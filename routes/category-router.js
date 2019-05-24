@@ -6,6 +6,6 @@ router.get('/', categoryControler.findAll);
 router.get('/:id', categoryControler.findById);
 router.post('/', upload.single('image'), categoryControler.create);
 router.put('/:id', upload.single('image'), categoryControler.put);
-router.delete('/', categoryControler.delete);
+router.delete('/:id', categoryControler.delete);
 
 module.exports = router;

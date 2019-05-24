@@ -40,7 +40,7 @@ controler.put = async (req, res, next) => {
 };
 
 controler.delete = async (req, res, next) => {
-    res.json(await Order.findOneAndDelete(req.params.id));
+    res.json(await Order.findByIdAndRemove(req.params.id));
 };
 
 module.exports = controler;
