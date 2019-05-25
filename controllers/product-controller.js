@@ -97,7 +97,7 @@ controler.put = async (req, res, next) => {
 };
 
 controler.delete = async (req, res, next) => {
-    res.json(await Product.findOneAndDelete(req.params.id));
+    res.json(await Product.findByIdAndDelete(req.params.id))
 };
 
 module.exports = controler;
