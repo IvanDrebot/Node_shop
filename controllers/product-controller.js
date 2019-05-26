@@ -11,13 +11,16 @@ controler.findById = async (req, res, next) => {
 
 controler.findAll = async (req, res, next) => {
     try {
-        const {skip, limit, ...others} = req.query;
+        const {
+            skip, limit,
+            min = 0, max = 100000,
+            ...others
+        } = req.query;
         const obj1 = {skip, limit};
         const obj2 = {others};
 
-        console.log(req.query);
-
         let products = await Product.find(obj2.others)
+            .find({price: {$gte: min, $lte: max}})
             .limit(obj1.limit)
             .skip(obj1.skip)
             .populate({
@@ -33,8 +36,7 @@ controler.findAll = async (req, res, next) => {
 
         res.json({products, count})
 
-    }
-    catch (e) {
+    } catch (e) {
         console.log(e.message);
     }
 };
@@ -81,7 +83,7 @@ controler.put = async (req, res, next) => {
             })
         }
 
-        await Product.findOneAndUpdate(
+        await Product.findByIdAndUpdate(
             req.params.id,
             req.body,
             {new: true});
