@@ -19,6 +19,7 @@ controler.findAll = async (req, res, next) => {
         const obj1 = {skip, limit};
         const obj2 = {others};
 
+
         let products = await Product.find(obj2.others)
             .find({price: {$gte: min, $lte: max}})
             .limit(obj1.limit)
@@ -32,9 +33,20 @@ controler.findAll = async (req, res, next) => {
                 select: 'name _id'
             });
 
+        const filters = [];
+
+        let filterKey = await Product.find(obj2.others);
+        for (const key of filterKey) {
+            for (const value of JSON.parse(key.description)) {
+                filters.push(value)
+            }
+        }
+
+        // console.log(filters);
+
         let count = await Product.countDocuments(obj2.others);
 
-        res.json({products, count})
+        res.json({products, count, filters})
 
     } catch (e) {
         console.log(e.message);

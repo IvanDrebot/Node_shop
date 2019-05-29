@@ -1,11 +1,12 @@
 let router = require('express').Router();
-let ProductControler = require('../controllers/product-controller');
+let ProductController = require('../controllers/product-controller');
 let upload = require('../helpers/upload');
+let checkAuth = require('../middleware/router-protection');
 
-router.get('/', ProductControler.findAll);
-router.post('/', upload.single('image'), ProductControler.create);
-router.get('/:id', ProductControler.findById);
-router.put('/:id', upload.single('image'), ProductControler.put);
-router.delete('/:id', ProductControler.delete);
+router.get('/', ProductController.findAll);
+router.post('/', upload.single('image'), ProductController.create);
+router.get('/:id', ProductController.findById);
+router.put('/:id', upload.single('image'), ProductController.put);
+router.delete('/:id', ProductController.delete);
 
 module.exports = router;
