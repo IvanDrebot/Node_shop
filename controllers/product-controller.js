@@ -1,7 +1,7 @@
 let Product = require('../models/Product');
-let controler = {};
+let controller = {};
 
-controler.findById = async (req, res, next) => {
+controller.findById = async (req, res, next) => {
     res.json(await Product.findById(req.params.id)
         .populate({path: 'producer'})
         .populate({path: 'category'})
@@ -9,7 +9,7 @@ controler.findById = async (req, res, next) => {
 };
 
 
-controler.findAll = async (req, res, next) => {
+controller.findAll = async (req, res, next) => {
     try {
         const {
             skip, limit,
@@ -37,12 +37,8 @@ controler.findAll = async (req, res, next) => {
 
         let filterKey = await Product.find(obj2.others);
         for (const key of filterKey) {
-            for (const value of JSON.parse(key.description)) {
-                filters.push(value)
-            }
+            filters.push(JSON.parse(key.description))
         }
-
-        // console.log(filters);
 
         let count = await Product.countDocuments(obj2.others);
 
@@ -53,7 +49,7 @@ controler.findAll = async (req, res, next) => {
     }
 };
 
-controler.create = async (req, res, next) => {
+controller.create = async (req, res, next) => {
     try {
         console.log(req.body);
         let {category, producer, brand, price} = req.body;
@@ -82,7 +78,7 @@ controler.create = async (req, res, next) => {
     }
 };
 
-controler.put = async (req, res, next) => {
+controller.put = async (req, res, next) => {
     try {
         console.log(req.params.id);
         console.log(req.body);
@@ -110,8 +106,8 @@ controler.put = async (req, res, next) => {
     }
 };
 
-controler.delete = async (req, res, next) => {
+controller.delete = async (req, res, next) => {
     res.json(await Product.findByIdAndDelete(req.params.id))
 };
 
-module.exports = controler;
+module.exports = controller;
