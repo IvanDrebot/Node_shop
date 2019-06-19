@@ -1,12 +1,12 @@
 let Order = require('../models/Order');
-let Product = require('../models/Product');
+let moment = require('moment');
 let controller = {};
 
 controller.findAll = async (req, res, next) => {
     try {
-        let orders = await Order.find({});
-        let calcOrders = calcOrders(orders);
-        res.json(orders)
+        let orders = await Order.find({}).sort();
+        let ordersMap = calcOrders(orders);
+        res.json(ordersMap)
     } catch (e) {
         console.log(e);
     }
@@ -16,8 +16,15 @@ module.exports = controller;
 
 function calcOrders(orders) {
     const dailyOrders = {};
-    for (const order in orders) {
-
-    }
-    return dailyOrders
+    orders.forEach(order => {
+       const date = moment(order.date).format('DD.MM.YYYY');
+        if (date === moment().format('DD.MM.YYYY')) {
+            return
+        }
+        if (!dailyOrders[date]) {
+            dailyOrders[date] = []
+        }
+        dailyOrders[date].push(order)
+    });
+        return dailyOrders
 }
